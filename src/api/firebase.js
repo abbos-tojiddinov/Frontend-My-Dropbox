@@ -1,4 +1,4 @@
-
+/** @format */
 
 import { getFirestore } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
@@ -7,12 +7,13 @@ import { getStorage } from "firebase/storage";
 
 //  Update the config
 const firebaseConfig = {
-  apiKey: "AIzaSyDt1ILEden3HN0TO6U-EACB-ioWIPUKgxM",
-  authDomain: "denislamklimov-dropbox.firebaseapp.com",
-  projectId: "denislamklimov-dropbox",
-  storageBucket: "denislamklimov-dropbox.appspot.com",
-  messagingSenderId: "392302206633",
-  appId: "1:392302206633:web:90485529e533f8ccc853b8"
+  apiKey: "AIzaSyA2Gh7Eal-79jOaadjw-dQV4vgTVkyxBFg",
+  authDomain: "second-dropbox.firebaseapp.com",
+  projectId: "second-dropbox",
+  storageBucket: "second-dropbox.appspot.com",
+  messagingSenderId: "880524175614",
+  appId: "1:880524175614:web:64ef2f30af4a031216ddaf",
+  measurementId: "G-JX6E95J9QD",
 };
 
 // Initialize Firebase

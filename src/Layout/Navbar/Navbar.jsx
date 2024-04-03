@@ -7,20 +7,16 @@ import { UserLogout } from "../../redux/extraReducer";
 import { auth } from "../../api/firebase";
 import { Link } from "react-router-dom";
 
-
-
 function Navbar() {
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const dispatch = useDispatch();
   let user = JSON.parse(localStorage.getItem("localUser"));
   const [users, setUsers] = useState("");
-
   useEffect(() => {
     auth.onAuthStateChanged((e) => {
       setUsers(e);
     });
   }, []);
-
   return (
     <header>
       <div className="container">
@@ -41,6 +37,7 @@ function Navbar() {
                   Settings <FontAwesomeIcon icon={faGear} />
                 </li>
               </Link>
+
               <li onClick={() => dispatch(UserLogout())}>
                 Sign out <FontAwesomeIcon icon={faSignOut} />
               </li>
@@ -53,4 +50,3 @@ function Navbar() {
 }
 
 export default Navbar;
-

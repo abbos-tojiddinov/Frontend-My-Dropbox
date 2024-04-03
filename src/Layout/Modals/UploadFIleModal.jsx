@@ -5,66 +5,63 @@ import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { publishPost } from "../../redux/extraReducer";
 
-
-function UploadFileModal({ visible, setVisible, folderID }) {
+function UploadFIleModal({ visible, setVisible, folderID }) {
   const { postLoading } = useSelector((state) => state.files);
-  const user = JSON.parse(localStorage.getItem("localUser"));
+  let user = JSON.parse(localStorage.getItem("localUser"));
   const inputRef = useRef();
-  const dispatch = useDispatch();
+  var dispatch = useDispatch();
   const [file, setFile] = useState();
   const [selectedFile, setSelectedFile] = useState("");
-
   const handleChange = (e) => {
-    const uploadedFile = e.target.files[0];
-    setFile(uploadedFile);
-
+    setFile(e.target.files[0]);
+    const file = e.target.files[0];
     const reader = new FileReader();
     reader.onload = (e) => {
       setSelectedFile(e.target.result);
     };
 
-    reader.readAsDataURL(uploadedFile);
+    reader.readAsDataURL(file);
   };
-
   const handleGet = () => {
     inputRef.current.click();
   };
-
   const handlePublish = (e) => {
     e.preventDefault();
-    dispatch(publishPost({ file, userId: user.uid, folderId: folderID }));
+    dispatch(publishPost({ file: file, userId: user.uid, folderId: folderID }));
   };
-
-  const closeModal = () => {
+  if (postLoading) {
     setVisible(false);
     setFile("");
     setSelectedFile("");
-  };
-
+  }
   return (
     <div className={`modal ${visible ? "active" : ""}`}>
       <div className="modal-inner">
-        <div className="close-modal" onClick={closeModal}>
+        <div
+          className="close-modal"
+          onClick={() =>
+            setVisible(false) || setFile("") || setSelectedFile("")
+          }
+        >
           <FontAwesomeIcon icon={faClose} />
         </div>
         <div className="content upload-file">
           {selectedFile ? (
             <>
-              <button
-                style={{ width: "100%", marginBottom: "20px" }}
-                onClick={handlePublish}
-              >
-                public
+            <button style={{ width: "100%", marginBottom: "20px" }} onClick={handlePublish}>
+                Publish
               </button>
               <div className="img__container">
-                <img src={selectedFile} alt="Uploaded File" />
+                <img src={selectedFile ? selectedFile : null} />
                 <p>{file?.name}</p>
               </div>
             </>
           ) : (
             <>
               <input type="file" ref={inputRef} onChange={handleChange} />
-              <button onClick={handleGet}>download</button>
+              <h2>Upload Files</h2>
+              <p>Drag File or </p>
+              <button onClick={handleGet}>Browse</button>
             </>
           )}
         </div>
@@ -73,4 +70,4 @@ function UploadFileModal({ visible, setVisible, folderID }) {
   );
 }
 
-export default UploadFileModal;
+export default UploadFIleModal;

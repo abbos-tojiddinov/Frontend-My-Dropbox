@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import "./App.css";
-import Login from "./component/Authorization/Login";
-import Home from "./component/Home/Home";
-import Register from "./component/Authorization/Register";
-import Folder from "./component/Folder/Folder";
-import UserPage from "./component/UserPage/UserPage";
+import Login from "./Layout/Authorization/Login";
+import Home from "./Layout/Home/Home";
+import Register from "./Layout/Authorization/Register";
+import Folder from "./Layout/Folder/Folder";
+import UserPage from "./Layout/UserPage/UserPage";
 import { auth } from "./api/firebase";
 
 function App() {

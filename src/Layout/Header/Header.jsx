@@ -1,6 +1,5 @@
 import React from "react";
 import "./Header.css";
-
 function Header({
   setVisibleUploadModal,
   setVisibleCreateFolderModal,
@@ -9,15 +8,16 @@ function Header({
   return (
     <div>
       <div className="header-side container">
+        <h1>All Files</h1>
         <div className="buttons">
           <button
-            className="create" 
+            className="create"
             onClick={() => setVisibleCreateFolderModal(true)}
           >
             Create
           </button>
           <button
-            className="upload" 
+            className="upload"
             onClick={() => setVisibleUploadModal(true)}
           >
             Upload

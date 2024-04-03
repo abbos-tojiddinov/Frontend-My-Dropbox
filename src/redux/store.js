@@ -1,8 +1,10 @@
+/** @format */
+
 import { configureStore } from "@reduxjs/toolkit";
-import filesSlice from "./extraReducer";
+import filesSlice from './extraReducer'
 const store = configureStore({
   reducer: {
-    files: filesSlice,
+    files: filesSlice
   },
 });
 

@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { useState } from "react";
 import "./FileList.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,81 +12,87 @@ import {
   faEllipsis,
   faCopy,
 } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { deleteFiles } from "../../redux/extraReducer";
 import moment from "moment";
 
 function FileList({ filesD, foldersD }) {
   const [visibleDropdown, setVisibleDropdown] = useState(null);
+  const handleTogle = (id) => {
+    if (id === visibleDropdown) {
+      setVisibleDropdown("");
+      return;
+    }
+    setVisibleDropdown(id);
+  };
+  const [link, setLink] = useState("https://example.com");
   const [copySuccess, setCopySuccess] = useState(false);
   const dispatch = useDispatch();
-
-  const handleToggle = (id) => {
-    setVisibleDropdown((prev) => (prev === id ? null : id));
-  };
-
   const copyToClipboard = async (link) => {
     try {
       await navigator.clipboard.writeText(link);
       setCopySuccess(true);
-      alert("Successfully copied. Validity Period is 2 days");
+      alert("Succsesfuly copiyed  Validity Period is 2 days");
     } catch (err) {
       console.error("Failed to copy link: ", err);
       setCopySuccess(false);
     }
   };
-
+  console.log(copySuccess);
   return (
     <div className="fileTable">
-      <table className="table">
+      <table class="table">
         <tbody>
-          {foldersD?.map((folder) => (
-            <tr className="folder" key={folder.id}>
+          {foldersD?.map((el) => (
+            <tr className="folder">
               <td>
                 <Link
-                  to={`/home/folder/${folder.id}`}
-                  className="folder-link"
+                  to={`/home/folder/${el.id}`}
+                  style={{ width: "100%", color: "white" }}
                 >
-                  <FontAwesomeIcon icon={faFolder} /> {folder.name}
+                  <FontAwesomeIcon icon={faFolder} /> {el.name}
                 </Link>
               </td>
-              <td className="date-column">
-                {moment(folder.date.toDate()).format("L, LT")}
+              <td style={{ color: "white" }}>
+                {" "}
+                {moment(el.date.toDate()).format("L,LT")}
               </td>
             </tr>
           ))}
-          {filesD?.map((file) => (
-            <tr className="file" key={file.id}>
+          {filesD?.map((el) => (
+            <tr className="file" key={el.id}>
               <td>
                 <a
-                  href={file?.url}
+                  style={{ color: "#fff" }}
+                  href={el?.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="file-link"
                 >
-                  <FontAwesomeIcon icon={faFile} /> {file.filename}
+                  <FontAwesomeIcon icon={faFile} /> {el.filename}
                 </a>
               </td>
               <td>
-                <span className="ellipsis" onClick={() => handleToggle(file.id)}>
+                <span className="elipsis" onClick={() => handleTogle(el.id)}>
                   <FontAwesomeIcon icon={faEllipsis} />
                 </span>
                 <div
-                  className={`icons ${visibleDropdown === file.id ? "active" : ""}`}
+                  className={`icons ${
+                    visibleDropdown === el.id ? "active" : ""
+                  }`}
                 >
-                  <a
-                    href={file?.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
+                  <a href={el?.url} target="_blank" rel="noopener noreferrer">
                     <FontAwesomeIcon icon={faDownload} /> Download
                   </a>
-                  <span onClick={() => copyToClipboard(file?.url)}>
+                  <span onClick={() => copyToClipboard(el?.url)}>
                     <FontAwesomeIcon icon={faCopy} />
                     Copy Link
                   </span>
-                  <span onClick={() => dispatch(deleteFiles({ name: file.name, id: file.id }))}>
+                  <span
+                    onClick={() =>
+                      dispatch(deleteFiles({ name: el.name, id: el.id }))
+                    }
+                  >
                     <FontAwesomeIcon icon={faTrash} />
                     Delete
                   </span>

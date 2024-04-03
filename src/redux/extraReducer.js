@@ -1,3 +1,5 @@
+/** @format */
+
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   addDoc,
@@ -148,13 +150,16 @@ export const deleteFiles = createAsyncThunk("Delete", async (payload) => {
 
   const storageRef = ref(storage, payload.name);
 
+  // Check if the file exists before attempting to delete it
   try {
     await getDownloadURL(storageRef);
 
+    // The file exists, so delete it
     await deleteObject(storageRef);
 
     console.log("File deleted successfully");
 
+    // Also delete the corresponding document in Firestore
     await deleteDoc(doc(firestore, "files", payload.id));
 
     console.log("Document deleted successfully");
